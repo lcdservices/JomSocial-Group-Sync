@@ -1,0 +1,12 @@
+CiviCRM Group Sync
+
+Author: Brian Shaughnessy
+Url:    www.lcdservices.biz
+
+CiviCRM Group Sync is used to synchronize CiviCRM groups with Joomla 1.6+ ACL groups. After creating a sync rule using the component interface, any contacts added to a CiviCRM group will be added to corresponding linked Joomla ACL groups (provided the contact has an associated user record), and vice versa.
+
+The extension, consisting of a component and plugin, handles synching when a user is added to an ACL group, when a contact is added to a CiviCRM group, and when a rule is created.
+
+To download the package from github, click the download button and choose your preferred format. Or download a past version from the tags list. The single-package installer will install the component and install/enable the plugin.
+
+Please use the github issue tracker to report any bugs.

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+       <field name="id" 
+              type="text" 
+              default="0" 
+              label="JGLOBAL_FIELD_ID_LABEL"
+              readonly="true" class="readonly"
+              description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="jgroup_id" 
+              key_field="id"
+              value_field="title"
+              type="sql"
+              query="SELECT id, title FROM #__usergroups WHERE title != 'Public'"
+              label="COM_CIVIGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_JGROUP_ID" 
+              description="COM_CIVIGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_JGROUP_ID"
+              required="true" 
+              filter="safehtml" /> 
+
+       <field name="cgroup_id" 
+              key_field="cgroup_id"
+              value_field="cgroup_label"
+              type="sql" 
+              query="SELECT title as cgroup_label, id as cgroup_id FROM civicrm_group WHERE is_active = 1" 
+              class="inputbox"
+              label="COM_CIVIGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_CGROUP_ID" 
+              description="COM_CIVIGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_CGROUP_ID"
+              required="true" 
+              filter="safehtml" /> 
+
+       <field name="state"
+              type="list"
+              label="JSTATUS"
+              description="JFIELD_PUBLISHED_DESC"
+              class="inputbox"
+              size="1"
+              default="1">
+              <option value="1">JPUBLISHED</option>
+              <option value="0">JUNPUBLISHED</option>
+       </field> 
+
+       <field name="checked_out" type="hidden" filter="unset" />
+       <field name="checked_out_time" type="hidden" filter="unset" />
+
+	</fieldset>
+
+</form>
