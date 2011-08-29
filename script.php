@@ -1,8 +1,8 @@
 <?php
 /**
  * @version     2011-07-23 20:07:15$
- * @author      Brian Shaughnessy
- * @package     CiviCRM Group Sync
+ * @author      Marek Handze
+ * @package     JomSocial Group Sync
  * @copyright   Copyright (C) 2011- . All rights reserved.
  * @license     GNU GPL
  */
@@ -12,7 +12,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 /*
  * Installer script for package
  */
-class com_civiGroupSyncInstallerScript {
+class com_jomsocialGroupSyncInstallerScript {
         
     /**
      * method to run during installation
@@ -44,7 +44,7 @@ class com_civiGroupSyncInstallerScript {
         // Enable plugins
         $db->setQuery( "UPDATE $tableExtensions
                         SET $columnEnabled = 1
-                        WHERE $columnElement = 'civigroupsync'
+                        WHERE $columnElement = 'jomsocialgroupsync'
                         AND $columnType = 'plugin'"
                       );
         $db->query();

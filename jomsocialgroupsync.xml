@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6.0" method="upgrade">
-	<name>CiviGroupSync</name>
+	<name>JomSocialGroupSync</name>
 	<creationDate>2011-07-23</creationDate>
 	<copyright>Copyright (C) 2011. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
@@ -8,7 +8,7 @@
 	<authorEmail>brian@lcdservices.biz</authorEmail>
 	<authorUrl>www.lcdservices.biz</authorUrl>
 	<version>1.0.0</version>
-	<description>Sync CiviCRM groups with Joomla ACL groups. Using this tool you can dynamically manage access control based on CiviCRM group subscription.</description>
+	<description>Sync JomSocial groups with Joomla ACL groups. Using this tool you can dynamically manage access control based on JomSocial group subscription.</description>
     
     <scriptfile>script.php</scriptfile>
 
@@ -23,18 +23,18 @@
   		</sql>
    </uninstall>
 
-	<files folder="components/com_civigroupsync">
+	<files folder="components/com_jomsocialgroupsync">
 		<filename>index.html</filename>
 	</files>
 	
 	<administration>
-		<menu link="option=com_civigroupsync&amp;view=synchronizationrules" view="synchronizationrules" img="class:component" alt="CiviCRM Group Sync">COM_CIVIGROUPSYNC</menu>
-		<files folder="administrator/components/com_civigroupsync">
+		<menu link="option=com_jomsocialgroupsync&amp;view=synchronizationrules" view="synchronizationrules" img="class:component" alt="JomSocial Group Sync">COM_JOMSOCIALGROUPSYNC</menu>
+		<files folder="administrator/components/com_jomsocialgroupsync">
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
 			<filename>controller.php</filename>
 			<filename>index.html</filename>
-			<filename>civigroupsync.php</filename>
+			<filename>jomsocialgroupsync.php</filename>
 			<folder>controllers</folder>
 			<folder>helpers</folder>
 			<folder>models</folder>
@@ -43,13 +43,13 @@
 			<folder>views</folder>
 		</files>
 		<languages folder="administrator/language/en-GB">
-			<language tag="en-GB">en-GB.com_civigroupsync.ini</language>
-			<language tag="en-GB">en-GB.com_civigroupsync.sys.ini</language>
+			<language tag="en-GB">en-GB.com_jomsocialgroupsync.ini</language>
+			<language tag="en-GB">en-GB.com_jomsocialgroupsync.sys.ini</language>
 		</languages>
 	</administration>
 	
 	<plugins>
-        <plugin folder="plugins/civicrm" plugin="civigroupsync" name="CiviCRM Group Sync" group="civicrm" />
+        <plugin folder="plugins/system" plugin="jomsocialgroupsync" name="JomSocial Group Sync" group="system" />
     </plugins>
     
 </extension>

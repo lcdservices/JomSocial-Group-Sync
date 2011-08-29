@@ -1,8 +1,8 @@
 <?php
 /**
  * @version		2011-07-23 20:07:15$
- * @author		Brian Shaughnessy
- * @package		CiviCRM Group Sync
+ * @author		Marek Handze
+ * @package		JomSocial Group Sync
  * @copyright	Copyright (C) 2011. All rights reserved.
  * @license		GNU GPL
  */
@@ -11,12 +11,12 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.plugin.plugin' );
 
-class  plgSystemCiviGroupSync extends JPlugin
+class  plgSystemJomSocialGroupSync extends JPlugin
 {
 	
 	/*
-     * Joomla -> CiviCRM
-     * Update CiviCRM groups on Joomla user save 
+     * Joomla -> JomSocial
+     * Update JomSocial groups on Joomla user save 
      * Method is called after user data is stored in the database
      *
      * @param   array       $user       Holds the new user data.
@@ -32,146 +32,104 @@ class  plgSystemCiviGroupSync extends JPlugin
     
         $app = JFactory::getApplication();
         
-        // Instantiate CiviCRM
-        require_once JPATH_ROOT.'/'.'administrator/components/com_civicrm/civicrm.settings.php';
+        // Instantiate JomSocial
+        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
+        require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
         require_once 'CRM/Core/Config.php';
         require_once 'api/api.php';
-        $civiConfig =& CRM_Core_Config::singleton( );
-        
+
+
         // Get sync mappings
-        $mappings = self::getCiviGroupSyncMappings();
+        $mappings = self::getJomSocialGroupSyncMappings();
         if ( empty($mappings) ) {
             return;
         }
-        
-        // Retrieve Joomla User ID and CiviCRM Contact ID
-        $juserid = $user['id'];
-        $cuser   = civicrm_api( "UFMatch",
-                                "get", 
-                                array ('version' => '3', 
-                                       'uf_id'   => $juserid)
-                               );
-        $cuserid = $cuser['values'][$cuser['id']]['contact_id'];
-        
-        //TODO: if contact does not exist, we should probably create it here
-        
-        // Cycle through mappings and add to/remove from CiviCRM groups
+
+        // create JomSocial objects needed to manage group members
+        $group =& JTable::getInstance( 'Group' , 'CTable' );
+        $model =  CFactory::getModel( 'Groups' );
+
+        // create 
+        $data   = new stdClass();
+        $data->memberid     = $user['id'];
+        $data->approved     = 1;
+        $data->permissions  = 0;
+
+        // Cycle through mappings and add to/remove from JomSocial groups
         foreach ( $mappings as $mapping ) {
+
+            $data->groupid      = $mapping['jsgroup_id'];
+
             if ( in_array($mapping['jgroup_id'], $user['groups']) ) {
                 //echo 'jgroup_id '.$mapping['jgroup_id'].'</br>';
-                //echo 'cgroup_id '.$mapping['cgroup_id'].'</br>';
-                civicrm_api( "GroupContact",
-                             "create", 
-                             array ('version'    => '3', 
-                                    'group_id'   => $mapping['cgroup_id'], 
-                                    'contact_id' => $cuserid)
-                            );
+                //echo 'jsgroup_id '.$mapping['jsgroup_id'].'</br>';
+                $group_test_id = $mapping['jsgroup_id'];
+                
+                // Add user to group members table
+                $group->addMember( $data );
+
             } else {
-                civicrm_api( "GroupContact",
-                             "delete", 
-                             array ('version'    => '3', 
-                                    'group_id'   => $mapping['cgroup_id'], 
-                                    'contact_id' => $cuserid)
-                            );
+                $model->removeMember( $data );
             }
         }
-        
+
+
+        // call onGroupJoin for testing
+        //$group_test   = new stdClass();
+        //$group_test->id     = $group_test_id;
+        //self::onGroupJoin($group_test, $user['id']);
+
         return;
-        
+
     } //end onUserAfterSave
-    
-    //NOTE: If a user is deleted, we don't alter the contact record
-    //NOTE: If a JGroup or CGroup is deleted, we don't remove from the linked group
+
+    //NOTE: If a JGroup or JSGroup is deleted, we don't remove from the linked group
     
     /*
-     * CiviCRM -> Joomla
-     * Update Joomla groups on CiviCRM group-contact add 
-     * Method is called after group contact subscription is stored in the database
+     * JomSocial -> Joomla
+     * Update Joomla groups on JomSocial jsgroup-contact add 
      *
-     * @param   string    $op           Operation performed
-     * @param   string    $objectName   Name of object
-     * @param   int       $objectId     Unique identifier (group)
-     * @param   object    &$objectRef   Object reference (contact)
+     * @param   string    $group  jsgroup object
+     * @param   int       $userid     Unique identifier (user)
      *
      * @return  void
      * @since   1.6
      */
-    public function civicrm_post( $op, $objectName, $objectId, &$objectRef ) {
-            
-        if ( $objectName != 'GroupContact' ) {
-            return;
-        }
-        
+    public function onGroupJoin( $group, $userid) {
+
         // Get sync mappings
-        $mappings = self::getCiviGroupSyncMappings();
+        $mappings = self::getJomSocialGroupSyncMappings();
         if ( empty($mappings) ) {
             return;
         }
-        
-        // Instantiate CiviCRM
+
+        // Instantiate JomSocial
         require_once 'CRM/Core/Config.php';
         require_once 'api/api.php';
-        $civiConfig =& CRM_Core_Config::singleton( );
-        
-        // Get IDs
-        $gid     = $objectId;
-        $cid     = $objectRef[0];
-        $juser   = civicrm_api( "UFMatch",
-                                "get", 
-                                array ('version'    => '3', 
-                                       'contact_id' => $cid)
-                               );
-        //if we can't match with a Joomla user, exit
-        if ( $juser['count'] == 0 ) {
-            return;
-        }
-        $juserid = $juser['values'][$juser['id']]['uf_id'];
-        
-        // Cycle through mappings and locate jgroup_id
-        $jgroup_ids = array();
+
+        jimport('joomla.user.helper1');
+        $model =  CFactory::getModel( 'Groups' );
+
         foreach ( $mappings as $mapping ) {
-            if ( $mapping['cgroup_id'] == $gid ){
-                $jgroup_ids[] = $mapping['jgroup_id'];
+            if ( $model->isMember($userid, $mapping['jsgroup_id']) ) {
+                // echo 'jgroup_id '.$mapping['jgroup_id'].'</br>';
+                // echo 'jsgroup_id '.$mapping['jsgroup_id'].'</br>';
+                
+                // Add user to jgroup members table
+                JUserHelper::addUserToGroup( $userid, $mapping['jgroup_id'] );
+                
+            } else {
+                JUserHelper::removeUserFromGroup( $userid, $mapping['jgroup_id'] );
             }
         }
-        
-        // Return if there is no mapped Joomla group
-        if ( empty($jgroup_ids) ) {
-            return;
-        }
-        
-        jimport('joomla.user.helper');
 
-        switch ( $op ) {
-            case 'create':
-            case 'edit':
-                //add to Joomla group
-                foreach ( $jgroup_ids as $jgroup_id ) {
-                    JUserHelper::addUserToGroup( $juserid, $jgroup_id );
-                }
-                break;
-            
-            case 'delete':
-                //remove from Joomla group
-                //first check to make sure contact has no other C groups associated with this J group
-                foreach ( $jgroup_ids as $jgroup_id ) {
-                    if ( self::countCiviJoomlaGroups($mappings, $jgroup_id, $gid, $cid) > 1 ) {
-                        break;
-                    } else {
-                        JUserHelper::removeUserFromGroup( $juserid, $jgroup_id );
-                    }
-                }
-                break;
-            
-            default:
-                break;
-        }
-        
-    } //end civicrm_post
-    
-    
+
+        return true;
+    } //end jomsocial_post
+
+
     /*
-     * CiviCRM <-> Joomla
+     * JomSocial <-> Joomla
      * Run rules when mapping is created/edited or enabled
      * Note: we don't need to update users/contacts when a JGroup or CGroup
      * is created, as the group must precede the mapping record.
@@ -185,141 +143,78 @@ class  plgSystemCiviGroupSync extends JPlugin
      * @param   bool        If the content is just about to be created
      * @since   1.6
      */
-    public function onContentAfterSave($context, &$article, $isNew) {
-        
-        // Instantiate CiviCRM
-        require_once JPATH_ROOT.'/'.'administrator/components/com_civicrm/civicrm.settings.php';
-        require_once 'CRM/Core/Config.php';
-        require_once 'CRM/Contact/BAO/Group.php';
-        require_once 'api/api.php';
-        $civiConfig =& CRM_Core_Config::singleton( );
-        
-        jimport( 'joomla.user.helper' );
-        jimport( 'joomla.access.access' );
-        
-        $ruleID    = $article->id;
+
+     public function onContentAfterSave($context, &$article, $isNew) {
+
+        $ruleID = $article->id;
         $ruleState = $article->state;
         $jgroup_id = $article->jgroup_id;
-        $cgroup_id = $article->cgroup_id;
+        $jsgroup_id = $article->jsgroup_id;
 
         //if the sync rule is disabled, take no action and exit
         if ( !$ruleState ) {
-            return;
+            return true;
         }
+        
+        //if we are not in the right context, exit
+        if ( !in_array( $context, array('com_jomsocialgroupsync.synchronizationrule', 'com_jomsocialgroupsync.synchronizationrules') ) ) {
+                    return true;
+        }
+        
+        //instantiate CiviCRM
+        require_once 'CRM/Core/Config.php';
+        require_once 'CRM/Contact/BAO/Group.php';
+        require_once 'api/api.php';
+
+        //include Joomla files
+        jimport( 'joomla.user.helper' );
+        jimport( 'joomla.access.access' );
 
         //update Joomla groups
-        $cGroupContacts = CRM_Contact_BAO_Group::getGroupContacts($cgroup_id);
-        foreach ( $cGroupContacts as $cGroupContact ) {
-            
-            $cid     = $cGroupContact['contact_id'];
-            $juser   = civicrm_api( "UFMatch",
-                                    "get", 
-                                    array ('version'    => '3', 
-                                           'contact_id' => $cid)
-                                   );
-            
-            //if we can't match with a Joomla user, move to next record
-            if ( $juser['count'] == 0 ) {
-                continue;
-            }
-            
-            $juserid = $juser['values'][$juser['id']]['uf_id'];
+        $model =  CFactory::getModel( 'Groups' );
+        $members = $model->getMembers($jsgroup_id);
 
+        foreach ( $members as $member ) {
             //add to Joomla group
-            JUserHelper::addUserToGroup( $juserid, $jgroup_id );
+            JUserHelper::addUserToGroup( $member->id, $jgroup_id );
+        }
+
+
+        // update JomSocial groups
+        $group =& JTable::getInstance( 'Group' , 'CTable' );
+
+        $data   = new stdClass();
+        $data->approved     = 1;
+        $data->permissions  = 0;
+        $data->groupid = $jsgroup_id;
+        $jGroupUsers = JAccess::getUsersByGroup($jgroup_id);
+
+        foreach ( $jGroupUsers as $userid ) {
+           //add to JomSocial group
+           $data->memberid     = $userid;
+           $group->addMember( $data );
+
         }
         
-        //update CiviCRM groups
-        $jGroupContacts = JAccess::getUsersByGroup($jgroup_id);
-        foreach ( $jGroupContacts as $juserid ) {
-            
-            $cuser   = civicrm_api( "UFMatch",
-                                    "get", 
-                                    array ('version' => '3', 
-                                           'uf_id'   => $juserid)
-                                   );
-                                   
-            //if we can't match with a CiviCRM user, move to next record
-            if ( $cuser['count'] == 0 ) {
-                continue;
-            }
-            
-            $cuserid = $cuser['values'][$cuser['id']]['contact_id'];
-            
-            //add to CiviCRM group
-            civicrm_api( "GroupContact",
-                         "create", 
-                         array ('version'    => '3', 
-                                'group_id'   => $cgroup_id, 
-                                'contact_id' => $cuserid)
-                        );
-            
-        }
+        return true;
         
+
     } //end onContentAfterSave
-    
+
     /*
      * Helper function to retrieve sync mappings
      *
      * @return  array
      * @since   1.6
      */
-    public function getCiviGroupSyncMappings() {
+    public function getJomSocialGroupSyncMappings() {
         
         $db = JFactory::getDbo();
-        $db->setQuery("SELECT * FROM #__civigroupsync_rules WHERE state = 1");
+        $db->setQuery("SELECT * FROM #__jomsocialgroupsync_rules WHERE state = 1");
         $mappings = $db->loadAssocList($key='id');
 
         return $mappings;
         
-    } //end getCiviGroupSyncMappings
-    
-    /*
-     * Helper function to check if the user has multiple valid mappings to a Joomla group
-     *
-     * @return  count of contact-group memberships mapped to passed joomla group
-     * @since   1.6
-     */
-    public function countCiviJoomlaGroups($mappings, $jgroup_id, $gid, $cid) {
-        
-        //start count at 1 for group we are removing
-        $countCiviGroups = 1;
-        
-        //get all cgroup_ids for passed jgroup_id
-        $civiGroups = array();
-        foreach ( $mappings as $mapping ) {
-            if ( $mapping['jgroup_id'] == $jgroup_id ) {
-                $civiGroups[] = $mapping['cgroup_id'];
-            }
-        }
-        
-        //if civiGroups count is < 2, we can exit immediately
-        if ( count($civiGroups) < 2 ) {
-            return $countCiviGroups;
-        }
-        
-        //get contacts group memberships
-        $contactGroups = civicrm_api( "GroupContact",
-                                      "get", 
-                                      array ('version'    => '3', 
-                                             'contact_id' => $cid)
-                                     );
-        
-        //now cycle through our list of multiple civiGroups and determine if contact is member of others
-        foreach ( $civiGroups as $civiGroup ) {
-            //skip the Civi group ID we are working with
-            if ( $civiGroup == $gid ) {
-                continue;
-            }
-            foreach ( $contactGroups['values'] as $contactGroup ) {
-                if ( $contactGroup['group_id'] == $civiGroup ) {
-                    $countCiviGroups++;
-                }
-            }
-        }
-                
-        return $countCiviGroups;
-        
-    } //end countCiviJoomlaGroups
+    } //end getJomSocialGroupSyncMappings
 
 }
