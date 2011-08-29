@@ -1,10 +1,10 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 // No direct access
@@ -13,9 +13,9 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.view');
 
 /**
- * View class for a list of CiviGroupSync.
+ * View class for a list of JomSocialGroupSync.
  */
-class CiviGroupSyncViewSynchronizationrules extends JView
+class JomSocialGroupSyncViewSynchronizationrules extends JView
 {
 	protected $items;
 	protected $pagination;
@@ -47,12 +47,12 @@ class CiviGroupSyncViewSynchronizationrules extends JView
 	 */
 	protected function addToolbar()
 	{
-		require_once JPATH_COMPONENT.DS.'helpers'.DS.'civigroupsync.php';
+		require_once JPATH_COMPONENT.DS.'helpers'.DS.'jomsocialgroupsync.php';
 
 		$state	= $this->get('State');
 		$canDo	= CiviGroupSyncHelper::getActions($state->get('filter.category_id'));
 
-		JToolBarHelper::title(JText::_('COM_CIVIGROUPSYNC_TITLE_SYNCHRONIZATIONRULES'), 'generic.png');
+		JToolBarHelper::title(JText::_('COM_JOMSOCIALGROUPSYNC_TITLE_SYNCHRONIZATIONRULES'), 'generic.png');
 
         //Check if the form exists before showing the add/edit buttons
         $formPath = JPATH_COMPONENT_ADMINISTRATOR.DS.'views'.DS.'synchronizationrule';
@@ -100,7 +100,7 @@ class CiviGroupSyncViewSynchronizationrules extends JView
         }
 
 		if ($canDo->get('core.admin')) {
-			JToolBarHelper::preferences('com_civigroupsync');
+			JToolBarHelper::preferences('com_jomsocialgroupsync');
 		}
 
 

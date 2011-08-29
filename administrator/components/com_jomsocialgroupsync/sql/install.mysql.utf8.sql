@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `#__civigroupsync_rules` (
+CREATE TABLE IF NOT EXISTS `#__jomsocialgroupsync_rules` (
 `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 `ordering` INT(11)  NOT NULL ,
 `state` TINYINT(1)  NOT NULL DEFAULT '1',

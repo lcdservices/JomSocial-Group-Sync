@@ -1,10 +1,10 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 // No direct access
@@ -15,7 +15,7 @@ jimport('joomla.application.component.view');
 /**
  * View to edit
  */
-class CiviGroupSyncViewSynchronizationRule extends JView
+class JomSocialGroupSyncViewSynchronizationRule extends JView
 {
 	protected $state;
 	protected $item;
@@ -54,9 +54,9 @@ class CiviGroupSyncViewSynchronizationRule extends JView
         } else {
             $checkedOut = false;
         }
-		$canDo		= CiviGroupSyncHelper::getActions();
+		$canDo		= JomSocialGroupSyncHelper::getActions();
 
-		JToolBarHelper::title(JText::_('COM_CIVIGROUPSYNC_TITLE_SYNCHRONIZATIONRULE'), 'generic.png');
+		JToolBarHelper::title(JText::_('COM_JOMSOCIALGROUPSYNC_TITLE_SYNCHRONIZATIONRULE'), 'generic.png');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))

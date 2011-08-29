@@ -1,10 +1,10 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 
@@ -17,11 +17,11 @@ $user	= JFactory::getUser();
 $userId	= $user->get('id');
 $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
-$canOrder	= $user->authorise('core.edit.state', 'com_civigroupsync');
+$canOrder	= $user->authorise('core.edit.state', 'com_jomsocialgroupsync');
 $saveOrder	= $listOrder == 'a.ordering';
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_civigroupsync&view=synchronizationrules'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_jomsocialgroupsync&view=synchronizationrules'); ?>" method="post" name="adminForm" id="adminForm">
 	<fieldset id="filter-bar">
 		<div class="filter-search fltlft">
 			<label class="filter-search-lbl" for="filter_search"><?php echo JText::_('JSEARCH_FILTER_LABEL'); ?></label>
@@ -50,10 +50,10 @@ $saveOrder	= $listOrder == 'a.ordering';
 				</th>
 
 				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_CIVIGROUPSYNC_SYNCHRONIZATIONRULES_JGROUP_ID', 'a.jgroup_id', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('grid.sort',  'COM_JOMSOCIALGROUPSYNC_SYNCHRONIZATIONRULES_JGROUP_ID', 'a.jgroup_id', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_CIVIGROUPSYNC_SYNCHRONIZATIONRULES_CGROUP_ID', 'a.cgroup_id', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('grid.sort',  'COM_JOMSOCIALGROUPSYNC_SYNCHRONIZATIONRULES_CGROUP_ID', 'a.cgroup_id', $listDirn, $listOrder); ?>
 				</th>
 
 
@@ -87,10 +87,10 @@ $saveOrder	= $listOrder == 'a.ordering';
 		<tbody>
 		<?php foreach ($this->items as $i => $item) :
 			$ordering	= ($listOrder == 'a.ordering');
-			$canCreate	= $user->authorise('core.create',		'com_civigroupsync');
-			$canEdit	= $user->authorise('core.edit',			'com_civigroupsync');
-			$canCheckin	= $user->authorise('core.manage',		'com_civigroupsync');
-			$canChange	= $user->authorise('core.edit.state',	'com_civigroupsync');
+			$canCreate	= $user->authorise('core.create',		'com_jomsocialgroupsync');
+			$canEdit	= $user->authorise('core.edit',			'com_jomsocialgroupsync');
+			$canCheckin	= $user->authorise('core.manage',		'com_jomsocialgroupsync');
+			$canChange	= $user->authorise('core.edit.state',	'com_jomsocialgroupsync');
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
@@ -98,18 +98,18 @@ $saveOrder	= $listOrder == 'a.ordering';
 				</td>
 
 				<td>
-				    <?php $jGroupName = CiviGroupSyncHelper::getJGroupName($item->jgroup_id); ?>
+				    <?php $jGroupName = JomSocialGroupSyncHelper::getJGroupName($item->jgroup_id); ?>
 				    <?php if ($canEdit || $canEditOwn) : ?>
-                        <a href="<?php echo JRoute::_('index.php?option=com_civigroupsync&task=synchronizationrule.edit&id='.$item->id);?>">
+                        <a href="<?php echo JRoute::_('index.php?option=com_jomsocialgroupsync&task=synchronizationrule.edit&id='.$item->id);?>">
                             <?php echo $jGroupName.'</a> (id: '.$item->jgroup_id.')'; ?>
                     <?php else : ?>
                         <?php echo $jGroupName.' (id: '.$item->jgroup_id.')'; ?>
                     <?php endif; ?>
 				</td>
 				<td>
-				    <?php $cGroupName = CiviGroupSyncHelper::getCGroupName($item->cgroup_id); ?>
+				    <?php $cGroupName = JomSocialGroupSyncHelper::getCGroupName($item->cgroup_id); ?>
                     <?php if ($canEdit || $canEditOwn) : ?>
-                        <a href="<?php echo JRoute::_('index.php?option=com_civigroupsync&task=synchronizationrule.edit&id='.$item->id);?>">
+                        <a href="<?php echo JRoute::_('index.php?option=com_jomsocialgroupsync&task=synchronizationrule.edit&id='.$item->id);?>">
                             <?php echo $cGroupName.'</a> (id: '.$item->cgroup_id.')'; ?>
                     <?php else : ?>
                         <?php echo $cGroupName.' (id: '.$item->cgroup_id.')'; ?>

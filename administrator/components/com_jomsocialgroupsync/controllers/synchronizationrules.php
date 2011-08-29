@@ -1,10 +1,10 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 // No direct access.
@@ -15,13 +15,13 @@ jimport('joomla.application.component.controlleradmin');
 /**
  * Synchronizationrules list controller class.
  */
-class CiviGroupSyncControllerSynchronizationrules extends JControllerAdmin
+class JomSocialGroupSyncControllerSynchronizationrules extends JControllerAdmin
 {
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function &getModel($name = 'synchronizationrule', $prefix = 'CiviGroupSyncModel')
+	public function &getModel($name = 'synchronizationrule', $prefix = 'JomSocialGroupSyncModel')
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;

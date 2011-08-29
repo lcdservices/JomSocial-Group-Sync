@@ -1,10 +1,10 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 // no direct access
@@ -25,10 +25,10 @@ JHtml::_('behavior.formvalidation');
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_civigroupsync&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="synchronizationrule-form" class="form-validate">
+<form action="<?php echo JRoute::_('index.php?option=com_jomsocialgroupsync&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="synchronizationrule-form" class="form-validate">
 	<div class="width-60 fltlft">
 		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_CIVIGROUPSYNC_LEGEND_SYNCHRONIZATIONRULE'); ?></legend>
+			<legend><?php echo JText::_('COM_JOMSOCIALGROUPSYNC_LEGEND_SYNCHRONIZATIONRULE'); ?></legend>
 			<ul class="adminformlist">
 
             

@@ -1,19 +1,19 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 // No direct access
 defined('_JEXEC') or die;
 
 /**
- * CiviGroupSync helper.
+ * JomSocialGroupSync helper.
  */
-class CiviGroupSyncHelper
+class JomSocialGroupSyncHelper
 {
 
 	/**
@@ -27,7 +27,7 @@ class CiviGroupSyncHelper
 		$user	= JFactory::getUser();
 		$result	= new JObject;
 
-		$assetName = 'com_civigroupsync';
+		$assetName = 'com_jomsocialgroupsync';
 
 		$actions = array(
 			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.delete'
@@ -56,7 +56,7 @@ class CiviGroupSyncHelper
     }
 
     /**
-     * Get CiviCRM Group
+     * Get JomSocial Group
      * 
      * $cgroupid int
      * @return   string
@@ -65,7 +65,7 @@ class CiviGroupSyncHelper
     public static function getCGroupName( $cgroupid )
     {
         $db = JFactory::getDbo();
-        $db->setQuery("SELECT title FROM civicrm_group WHERE id = $cgroupid");
+        $db->setQuery("SELECT name FROM #__community_groups WHERE id = $cgroupid");
         $cGroupName = $db->loadResult();
         return $cGroupName;
     }

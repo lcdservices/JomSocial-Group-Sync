@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<fieldset name="component"
-		label="COM_CIVIGROUPSYNC_COMPONENT_LABEL"
-		description="COM_CIVIGROUPSYNC_COMPONENT_DESC"
+		label="COM_JOMSOCIALGROUPSYNC_COMPONENT_LABEL"
+		description="COM_JOMSOCIALGROUPSYNC_COMPONENT_DESC"
 	>
 
 	</fieldset>
@@ -13,7 +13,7 @@
 	>
 
 		<field name="rules" type="rules"
-			component="com_civigroupsync"
+			component="com_jomsocialgroupsync"
 			filter="rules"
 			validate="rules"
 			label="JCONFIG_PERMISSIONS_LABEL"

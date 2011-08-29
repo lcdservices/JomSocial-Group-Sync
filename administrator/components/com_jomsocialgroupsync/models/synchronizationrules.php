@@ -1,10 +1,10 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 defined('_JEXEC') or die;
@@ -12,9 +12,9 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.modellist');
 
 /**
- * Methods supporting a list of CiviGroupSync records.
+ * Methods supporting a list of JomSocialGroupSync records.
  */
-class CiviGroupSyncModelsynchronizationrules extends JModelList
+class JomSocialGroupSyncModelsynchronizationrules extends JModelList
 {
 
     /**
@@ -59,7 +59,7 @@ class CiviGroupSyncModelsynchronizationrules extends JModelList
 		$this->setState('filter.state', $published);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_civigroupsync');
+		$params = JComponentHelper::getParams('com_jomsocialgroupsync');
 		$this->setState('params', $params);
 
 		// List state information.
@@ -105,7 +105,7 @@ class CiviGroupSyncModelsynchronizationrules extends JModelList
 				'a.*'
 			)
 		);
-		$query->from('`#__civigroupsync_rules` AS a');
+		$query->from('`#__jomsocialgroupsync_rules` AS a');
 
 
                 // Join over the users for the checked out user.

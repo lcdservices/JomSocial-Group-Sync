@@ -1,10 +1,10 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 // No direct access.
@@ -13,15 +13,15 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.modeladmin');
 
 /**
- * CiviGroupSync model.
+ * JomSocialGroupSync model.
  */
-class CiviGroupSyncModelsynchronizationrule extends JModelAdmin
+class JomSocialGroupSyncModelsynchronizationrule extends JModelAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
 	 */
-	protected $text_prefix = 'COM_CIVIGROUPSYNC';
+	protected $text_prefix = 'COM_JOMSOCIALGROUPSYNC';
 
 
 	/**
@@ -33,7 +33,7 @@ class CiviGroupSyncModelsynchronizationrule extends JModelAdmin
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Synchronizationrule', $prefix = 'CiviGroupSyncTable', $config = array())
+	public function getTable($type = 'Synchronizationrule', $prefix = 'JomSocialGroupSyncTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
@@ -52,7 +52,7 @@ class CiviGroupSyncModelsynchronizationrule extends JModelAdmin
 		$app	= JFactory::getApplication();
 
 		// Get the form.
-		$form = $this->loadForm('com_civigroupsync.synchronizationrule', 'synchronizationrule', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_jomsocialgroupsync.synchronizationrule', 'synchronizationrule', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
 		}
@@ -69,7 +69,7 @@ class CiviGroupSyncModelsynchronizationrule extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_civigroupsync.edit.synchronizationrule.data', array());
+		$data = JFactory::getApplication()->getUserState('com_jomsocialgroupsync.edit.synchronizationrule.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -111,7 +111,7 @@ class CiviGroupSyncModelsynchronizationrule extends JModelAdmin
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
 				$db = JFactory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__civigroupsync_rules');
+				$db->setQuery('SELECT MAX(ordering) FROM #__jomsocialgroupsync_rules');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}

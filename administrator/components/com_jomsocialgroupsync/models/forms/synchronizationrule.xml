@@ -14,8 +14,8 @@
               value_field="title"
               type="sql"
               query="SELECT id, title FROM #__usergroups WHERE title != 'Public'"
-              label="COM_CIVIGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_JGROUP_ID" 
-              description="COM_CIVIGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_JGROUP_ID"
+              label="COM_JOMSOCIALGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_JGROUP_ID" 
+              description="COM_JOMSOCIALGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_JGROUP_ID"
               required="true" 
               filter="safehtml" /> 
 
@@ -25,8 +25,8 @@
               type="sql" 
               query="SELECT title as cgroup_label, id as cgroup_id FROM civicrm_group WHERE is_active = 1" 
               class="inputbox"
-              label="COM_CIVIGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_CGROUP_ID" 
-              description="COM_CIVIGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_CGROUP_ID"
+              label="COM_JOMSOCIALGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_CGROUP_ID" 
+              description="COM_JOMSOCIALGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_CGROUP_ID"
               required="true" 
               filter="safehtml" /> 
 

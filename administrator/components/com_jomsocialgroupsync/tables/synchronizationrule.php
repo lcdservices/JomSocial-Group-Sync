@@ -1,10 +1,10 @@
 <?php
 /**
  * @version     1.0.0
- * @package     com_civigroupsync
+ * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Created by com_combuilder - http://www.notwebdesign.com
+ * @author      Lighthouse Consulting and Design
  */
 
 // No direct access
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * synchronizationrule Table class
  */
-class CiviGroupSyncTableSynchronizationRule extends JTable
+class JomSocialGroupSyncTableSynchronizationRule extends JTable
 {
 	/**
 	 * Constructor
@@ -22,7 +22,7 @@ class CiviGroupSyncTableSynchronizationRule extends JTable
 	 */
 	public function __construct(&$db)
 	{
-		parent::__construct('#__civigroupsync_rules', 'id', $db);
+		parent::__construct('#__jomsocialgroupsync_rules', 'id', $db);
 	}
 
 	/**
