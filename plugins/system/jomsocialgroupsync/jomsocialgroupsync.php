@@ -35,9 +35,6 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         // Instantiate JomSocial
         require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
         require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
-        require_once 'CRM/Core/Config.php';
-        require_once 'api/api.php';
-
 
         // Get sync mappings
         $mappings = self::getJomSocialGroupSyncMappings();
@@ -104,8 +101,8 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         }
 
         // Instantiate JomSocial
-        require_once 'CRM/Core/Config.php';
-        require_once 'api/api.php';
+        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
+        require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
 
         jimport('joomla.user.helper1');
         $model =  CFactory::getModel( 'Groups' );
@@ -160,15 +157,14 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         if ( !in_array( $context, array('com_jomsocialgroupsync.synchronizationrule', 'com_jomsocialgroupsync.synchronizationrules') ) ) {
                     return true;
         }
-        
-        //instantiate CiviCRM
-        require_once 'CRM/Core/Config.php';
-        require_once 'CRM/Contact/BAO/Group.php';
-        require_once 'api/api.php';
 
         //include Joomla files
         jimport( 'joomla.user.helper' );
         jimport( 'joomla.access.access' );
+
+        // Instantiate JomSocial
+        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
+        require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
 
         //update Joomla groups
         $model =  CFactory::getModel( 'Groups' );
