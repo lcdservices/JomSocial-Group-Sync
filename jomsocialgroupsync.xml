@@ -9,8 +9,9 @@
 	<authorUrl>www.lcdservices.biz</authorUrl>
 	<version>1.0.0</version>
 	<description>Sync JomSocial groups with Joomla ACL groups. Using this tool you can dynamically manage access control based on JomSocial group subscription.</description>
+    <isapplication>false</isapplication>
     
-    <!--<scriptfile>script.php</scriptfile>-->
+    <scriptfile>script.php</scriptfile>
 
 	<install> <!-- Runs on install -->
     	<sql>

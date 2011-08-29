@@ -10,6 +10,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.plugin.plugin' );
+require_once( JPATH_ROOT.'/components/com_community/libraries/core.php');
 
 class  plgSystemJomSocialGroupSync extends JPlugin
 {
@@ -29,12 +30,16 @@ class  plgSystemJomSocialGroupSync extends JPlugin
      * @throws  Exception on error.
      */
     function onUserAfterSave( $user, $isnew, $success, $msg ) {
-    
+        
+        //if 'latitude' key exists, event triggered from within JomSocial 
+        if ( array_key_exists('latitude', $user) ) {
+            return;
+        }
+        
         $app = JFactory::getApplication();
         
         // Instantiate JomSocial
         require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
-        require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
 
         // Get sync mappings
         $mappings = self::getJomSocialGroupSyncMappings();
@@ -47,34 +52,25 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         $model =  CFactory::getModel( 'Groups' );
 
         // create 
-        $data   = new stdClass();
-        $data->memberid     = $user['id'];
-        $data->approved     = 1;
-        $data->permissions  = 0;
+        $data              = new stdClass();
+        $data->memberid    = $user['id'];
+        $data->approved    = 1;
+        $data->permissions = 0;
 
         // Cycle through mappings and add to/remove from JomSocial groups
         foreach ( $mappings as $mapping ) {
 
-            $data->groupid      = $mapping['jsgroup_id'];
+            $data->groupid = $mapping['cgroup_id'];
 
             if ( in_array($mapping['jgroup_id'], $user['groups']) ) {
-                //echo 'jgroup_id '.$mapping['jgroup_id'].'</br>';
-                //echo 'jsgroup_id '.$mapping['jsgroup_id'].'</br>';
-                $group_test_id = $mapping['jsgroup_id'];
                 
                 // Add user to group members table
-                $group->addMember( $data );
+                $addResult = $group->addMember( $data );
 
             } else {
                 $model->removeMember( $data );
             }
         }
-
-
-        // call onGroupJoin for testing
-        //$group_test   = new stdClass();
-        //$group_test->id     = $group_test_id;
-        //self::onGroupJoin($group_test, $user['id']);
 
         return;
 
@@ -92,7 +88,7 @@ class  plgSystemJomSocialGroupSync extends JPlugin
      * @return  void
      * @since   1.6
      */
-    public function onGroupJoin( $group, $userid) {
+    function onGroupJoin( &$group, $memberid ) {
 
         // Get sync mappings
         $mappings = self::getJomSocialGroupSyncMappings();
@@ -109,8 +105,6 @@ class  plgSystemJomSocialGroupSync extends JPlugin
 
         foreach ( $mappings as $mapping ) {
             if ( $model->isMember($userid, $mapping['jsgroup_id']) ) {
-                // echo 'jgroup_id '.$mapping['jgroup_id'].'</br>';
-                // echo 'jsgroup_id '.$mapping['jsgroup_id'].'</br>';
                 
                 // Add user to jgroup members table
                 JUserHelper::addUserToGroup( $userid, $mapping['jgroup_id'] );
@@ -119,8 +113,6 @@ class  plgSystemJomSocialGroupSync extends JPlugin
                 JUserHelper::removeUserFromGroup( $userid, $mapping['jgroup_id'] );
             }
         }
-
-
         return true;
     } //end jomsocial_post
 
@@ -155,7 +147,7 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         
         //if we are not in the right context, exit
         if ( !in_array( $context, array('com_jomsocialgroupsync.synchronizationrule', 'com_jomsocialgroupsync.synchronizationrules') ) ) {
-                    return true;
+            return true;
         }
 
         //include Joomla files
@@ -174,7 +166,6 @@ class  plgSystemJomSocialGroupSync extends JPlugin
             //add to Joomla group
             JUserHelper::addUserToGroup( $member->id, $jgroup_id );
         }
-
 
         // update JomSocial groups
         $group =& JTable::getInstance( 'Group' , 'CTable' );
@@ -214,3 +205,4 @@ class  plgSystemJomSocialGroupSync extends JPlugin
     } //end getJomSocialGroupSyncMappings
 
 }
+
