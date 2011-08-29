@@ -12,7 +12,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 /*
  * Installer script for package
  */
-class com_jomsocialGroupSyncInstallerScript {
+class com_JomSocialGroupSyncInstallerScript {
         
     /**
      * method to run during installation

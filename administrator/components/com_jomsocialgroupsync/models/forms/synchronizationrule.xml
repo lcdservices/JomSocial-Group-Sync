@@ -23,7 +23,7 @@
               key_field="cgroup_id"
               value_field="cgroup_label"
               type="sql" 
-              query="SELECT title as cgroup_label, id as cgroup_id FROM civicrm_group WHERE is_active = 1" 
+              query="SELECT name as cgroup_label, id as cgroup_id FROM #__community_groups WHERE published = 1" 
               class="inputbox"
               label="COM_JOMSOCIALGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_CGROUP_ID" 
               description="COM_JOMSOCIALGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_CGROUP_ID"

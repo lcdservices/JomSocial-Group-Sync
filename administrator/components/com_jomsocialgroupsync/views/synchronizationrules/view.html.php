@@ -50,7 +50,7 @@ class JomSocialGroupSyncViewSynchronizationrules extends JView
 		require_once JPATH_COMPONENT.DS.'helpers'.DS.'jomsocialgroupsync.php';
 
 		$state	= $this->get('State');
-		$canDo	= CiviGroupSyncHelper::getActions($state->get('filter.category_id'));
+		$canDo	= JomSocialGroupSyncHelper::getActions($state->get('filter.category_id'));
 
 		JToolBarHelper::title(JText::_('COM_JOMSOCIALGROUPSYNC_TITLE_SYNCHRONIZATIONRULES'), 'generic.png');
 
