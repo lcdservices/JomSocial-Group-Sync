@@ -4,7 +4,7 @@
  * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Lighthouse Consulting and Design
+ * @author      Created by com_combuilder - http://www.notwebdesign.com
  */
 
 // No direct access
@@ -39,7 +39,7 @@ class JomSocialGroupSyncHelper
 
 		return $result;
 	}
-    
+
     /**
      * Get Joomla ACL Group
      * 
@@ -62,11 +62,11 @@ class JomSocialGroupSyncHelper
      * @return   string
      * @since    1.6
      */
-    public static function getCGroupName( $cgroupid )
+    public static function getJSGroupName( $jsgroupid )
     {
         $db = JFactory::getDbo();
-        $db->setQuery("SELECT name FROM #__community_groups WHERE id = $cgroupid");
-        $cGroupName = $db->loadResult();
-        return $cGroupName;
+        $db->setQuery("SELECT name FROM #__community_groups WHERE id = $jsgroupid");
+        $jsGroupName = $db->loadResult();
+        return $jsGroupName;
     }
 }

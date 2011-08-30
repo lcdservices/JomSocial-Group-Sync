@@ -4,7 +4,7 @@
  * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Lighthouse Consulting and Design
+ * @author      Created by com_combuilder - http://www.notwebdesign.com
  */
 
 // no direct access
@@ -40,8 +40,8 @@ JHtml::_('behavior.formvalidation');
 			<?php echo $this->form->getInput('jgroup_id'); ?></li>
 
             
-			<li><?php echo $this->form->getLabel('cgroup_id'); ?>
-			<?php echo $this->form->getInput('cgroup_id'); ?></li>
+			<li><?php echo $this->form->getLabel('jsgroup_id'); ?>
+			<?php echo $this->form->getInput('jsgroup_id'); ?></li>
 
             
 

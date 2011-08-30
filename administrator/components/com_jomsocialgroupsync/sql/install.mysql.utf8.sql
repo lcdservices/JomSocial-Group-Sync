@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `#__jomsocialgroupsync_rules` (
 `checked_out` INT(11)  NOT NULL ,
 `checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 `jgroup_id` INT(11)  NOT NULL ,
-`cgroup_id` INT(11)  NOT NULL ,
+`jsgroup_id` INT(11)  NOT NULL ,
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
 

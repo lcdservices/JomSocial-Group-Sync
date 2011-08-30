@@ -19,14 +19,14 @@
               required="true" 
               filter="safehtml" /> 
 
-       <field name="cgroup_id" 
-              key_field="cgroup_id"
-              value_field="cgroup_label"
+       <field name="jsgroup_id" 
+              key_field="jsgroup_id"
+              value_field="jsgroup_label"
               type="sql" 
-              query="SELECT name as cgroup_label, id as cgroup_id FROM #__community_groups WHERE published = 1" 
+              query="SELECT name as jsgroup_label, id as jsgroup_id FROM #__community_groups WHERE published = 1"
               class="inputbox"
-              label="COM_JOMSOCIALGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_CGROUP_ID" 
-              description="COM_JOMSOCIALGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_CGROUP_ID"
+              label="COM_JOMSOCIALGROUPSYNC_FORM_LBL_SYNCHRONIZATIONRULE_JSGROUP_ID" 
+              description="COM_JOMSOCIALGROUPSYNC_FORM_DESC_SYNCHRONIZATIONRULE_JSGROUP_ID"
               required="true" 
               filter="safehtml" /> 
 

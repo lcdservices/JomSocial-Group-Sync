@@ -30,14 +30,14 @@ class  plgSystemJomSocialGroupSync extends JPlugin
      * @throws  Exception on error.
      */
     function onUserAfterSave( $user, $isnew, $success, $msg ) {
-        
+
         //if 'latitude' key exists, event triggered from within JomSocial 
         if ( array_key_exists('latitude', $user) ) {
             return;
         }
-        
+
         $app = JFactory::getApplication();
-        
+
         // Instantiate JomSocial
         require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
 
@@ -60,10 +60,10 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         // Cycle through mappings and add to/remove from JomSocial groups
         foreach ( $mappings as $mapping ) {
 
-            $data->groupid = $mapping['cgroup_id'];
+            $data->groupid = $mapping['jsgroup_id'];
 
             if ( in_array($mapping['jgroup_id'], $user['groups']) ) {
-                
+
                 // Add user to group members table
                 $addResult = $group->addMember( $data );
 
@@ -75,47 +75,6 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         return;
 
     } //end onUserAfterSave
-
-    //NOTE: If a JGroup or JSGroup is deleted, we don't remove from the linked group
-    
-    /*
-     * JomSocial -> Joomla
-     * Update Joomla groups on JomSocial jsgroup-contact add 
-     *
-     * @param   string    $group  jsgroup object
-     * @param   int       $userid     Unique identifier (user)
-     *
-     * @return  void
-     * @since   1.6
-     */
-    function onGroupJoin( &$group, $memberid ) {
-
-        // Get sync mappings
-        $mappings = self::getJomSocialGroupSyncMappings();
-        if ( empty($mappings) ) {
-            return;
-        }
-
-        // Instantiate JomSocial
-        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
-        require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
-
-        jimport('joomla.user.helper1');
-        $model =  CFactory::getModel( 'Groups' );
-
-        foreach ( $mappings as $mapping ) {
-            if ( $model->isMember($userid, $mapping['jsgroup_id']) ) {
-                
-                // Add user to jgroup members table
-                JUserHelper::addUserToGroup( $userid, $mapping['jgroup_id'] );
-                
-            } else {
-                JUserHelper::removeUserFromGroup( $userid, $mapping['jgroup_id'] );
-            }
-        }
-        return true;
-    } //end jomsocial_post
-
 
     /*
      * JomSocial <-> Joomla

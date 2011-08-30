@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" version="1.6.0" method="upgrade" group="system">
+<extension type="plugin" version="1.6.0" method="upgrade" group="community">
   <name>JomSocialGroupSync</name>
   <author>Brian Shaughnessy</author>
   <creationDate>2011-07-23</creationDate>
@@ -8,10 +8,11 @@
   <authorEmail>development@lcdservices.biz</authorEmail>
   <authoreUrl>http://www.lcdservices.biz</authoreUrl>
   <version>1.0</version>
+  <isapplication>true</isapplication>
   <description>Companion plugin for the JomSocial Group Sync component, providing synchronization of Joomla ACL Groups with JomSocial Groups.</description>
   <files>
     <filename plugin="jomsocialgroupsync">jomsocialgroupsync.php</filename>
-    <filename>jomsocialgroupsync.xml</filename>
+    <filename plugin="jomsocialgroupsync">jomsocialgroupsync.xml</filename>
     <filename>index.html</filename>
   </files>
 </extension>

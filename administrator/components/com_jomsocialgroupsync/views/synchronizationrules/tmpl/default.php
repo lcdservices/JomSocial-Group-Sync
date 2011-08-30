@@ -4,7 +4,7 @@
  * @package     com_jomsocialgroupsync
  * @copyright   Copyright (C) 2011. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Lighthouse Consulting and Design
+ * @author      Created by com_combuilder - http://www.notwebdesign.com
  */
 
 
@@ -53,7 +53,7 @@ $saveOrder	= $listOrder == 'a.ordering';
 				<?php echo JHtml::_('grid.sort',  'COM_JOMSOCIALGROUPSYNC_SYNCHRONIZATIONRULES_JGROUP_ID', 'a.jgroup_id', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_JOMSOCIALGROUPSYNC_SYNCHRONIZATIONRULES_CGROUP_ID', 'a.cgroup_id', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('grid.sort',  'COM_JOMSOCIALGROUPSYNC_SYNCHRONIZATIONRULES_JSGROUP_ID', 'a.jsgroup_id', $listDirn, $listOrder); ?>
 				</th>
 
 
@@ -107,12 +107,12 @@ $saveOrder	= $listOrder == 'a.ordering';
                     <?php endif; ?>
 				</td>
 				<td>
-				    <?php $cGroupName = JomSocialGroupSyncHelper::getCGroupName($item->cgroup_id); ?>
+				    <?php $jsGroupName = JomSocialGroupSyncHelper::getJSGroupName($item->jsgroup_id); ?>
                     <?php if ($canEdit || $canEditOwn) : ?>
                         <a href="<?php echo JRoute::_('index.php?option=com_jomsocialgroupsync&task=synchronizationrule.edit&id='.$item->id);?>">
-                            <?php echo $cGroupName.'</a> (id: '.$item->cgroup_id.')'; ?>
+                            <?php echo $jsGroupName.'</a> (id: '.$item->jsgroup_id.')'; ?>
                     <?php else : ?>
-                        <?php echo $cGroupName.' (id: '.$item->cgroup_id.')'; ?>
+                        <?php echo $jsGroupName.' (id: '.$item->jsgroup_id.')'; ?>
                     <?php endif; ?>
 				</td>
 
