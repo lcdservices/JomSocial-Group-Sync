@@ -11,4 +11,6 @@ To download the package from github, click the download button and choose your p
 
 Please use the github issue tracker to report any bugs.
 
+CHANGELOG:
+
 beta-1 :: 2011-08-31 :: missing sync on JomSocial group save to Joomla, due to limitations in JomSocial event triggers
