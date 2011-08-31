@@ -10,3 +10,5 @@ The extension, consisting of a component and plugin, handles synching when a use
 To download the package from github, click the download button and choose your preferred format. Or download a past version from the tags list. The single-package installer will install the component and install/enable the plugin.
 
 Please use the github issue tracker to report any bugs.
+
+beta-1 :: 2011-08-31 :: missing sync on JomSocial group save to Joomla, due to limitations in JomSocial event triggers
