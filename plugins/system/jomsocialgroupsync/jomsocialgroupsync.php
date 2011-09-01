@@ -65,7 +65,9 @@ class  plgSystemJomSocialGroupSync extends JPlugin
             if ( in_array($mapping['jgroup_id'], $user['groups']) ) {
 
                 // Add user to group members table
-                $addResult = $group->addMember( $data );
+                if (!$model->isMember($data->memberid, $data->groupid)) {
+					$addResult = $group->addMember( $data );
+				}
 
             } else {
                 $model->removeMember( $data );

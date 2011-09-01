@@ -38,7 +38,7 @@ class  plgCommunityJomSocialGroupSync extends CApplications
         require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
         require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
 
-        jimport('joomla.user.helper1');
+        jimport('joomla.user.helper');
         $model =  CFactory::getModel( 'Groups' );
 
         foreach ( $mappings as $mapping ) {
