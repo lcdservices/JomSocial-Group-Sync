@@ -10,7 +10,6 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.plugin.plugin' );
-require_once( JPATH_ROOT.'/components/com_community/libraries/core.php');
 
 class  plgSystemJomSocialGroupSync extends JPlugin
 {
@@ -39,7 +38,8 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         $app = JFactory::getApplication();
 
         // Instantiate JomSocial
-        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
+        require_once JPATH_ROOT.'/administrator/components/com_community/defines.php';
+        require_once JPATH_ROOT.'/components/com_community/libraries/core.php';
 
         // Get sync mappings
         $mappings = self::getJomSocialGroupSyncMappings();
@@ -94,6 +94,12 @@ class  plgSystemJomSocialGroupSync extends JPlugin
 
      public function onContentAfterSave($context, &$article, $isNew) {
 
+        //if we are not in the right context, exit
+        if ( !in_array( $context, array('com_jomsocialgroupsync.synchronizationrule', 
+                                        'com_jomsocialgroupsync.synchronizationrules') ) ) {
+            return true;
+        }
+
         $ruleID = $article->id;
         $ruleState = $article->state;
         $jgroup_id = $article->jgroup_id;
@@ -103,19 +109,14 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         if ( !$ruleState ) {
             return true;
         }
-        
-        //if we are not in the right context, exit
-        if ( !in_array( $context, array('com_jomsocialgroupsync.synchronizationrule', 'com_jomsocialgroupsync.synchronizationrules') ) ) {
-            return true;
-        }
 
         //include Joomla files
         jimport( 'joomla.user.helper' );
         jimport( 'joomla.access.access' );
 
         // Instantiate JomSocial
-        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
-        require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
+        require_once JPATH_ROOT.'/administrator/components/com_community/defines.php';
+        require_once JPATH_ROOT.'/components/com_community/libraries/core.php';
 
         //update Joomla groups
         $model =  CFactory::getModel( 'Groups' );
@@ -143,7 +144,6 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         }
         
         return true;
-        
 
     } //end onContentAfterSave
 
