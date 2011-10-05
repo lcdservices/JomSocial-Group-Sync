@@ -27,6 +27,38 @@ class  plgCommunityJomSocialGroupSync extends CApplications
      * @since   1.6
      */
     function onGroupJoin( &$group, $memberid ) {
+        if (self::groupsSync (&$group, $memberid)) {
+            return true;
+        }
+
+    } //end jomsocial_post
+
+    //NOTE: If a JGroup or JSGroup is deleted, we don't remove from the linked group
+    
+    /*
+     * JomSocial -> Joomla
+     * Update Joomla groups on JomSocial jsgroup-contact approved 
+     *
+     * @param   string    $group  jsgroup object
+     * @param   int       $memberid     Unique identifier (member)
+     *
+     * @return  void
+     * @since   1.6
+     */
+    function onGroupJoinApproved( &$group, $memberid ) {
+        if (self::groupsSync (&$group, $memberid)) {
+            return true;
+        }
+    } //end jomsocial_post
+
+
+    /*
+     * Helper function to sync jomsocial and joomla groups
+     *
+     * @return  array
+     * @since   1.6
+     */
+    function groupsSync ( &$group, $memberid ) {
 
         // Get sync mappings
         $mappings = self::getJomSocialGroupSyncMappings();
@@ -42,17 +74,15 @@ class  plgCommunityJomSocialGroupSync extends CApplications
         $model =  CFactory::getModel( 'Groups' );
 
         foreach ( $mappings as $mapping ) {
-            if ( $model->isMember($member, $mapping['jsgroup_id']) ) {
+            if ( $model->isMember($memberid, $mapping['jsgroup_id']) ) {
 
                 // Add user to jgroup members table
-                JUserHelper::addUserToGroup( $userid, $mapping['jgroup_id'] );
+                JUserHelper::addUserToGroup( $memberid, $mapping['jgroup_id'] );
 
-            } else {
-                JUserHelper::removeUserFromGroup( $userid, $mapping['jgroup_id'] );
             }
         }
         return true;
-    } //end jomsocial_post
+    }
 
     /*
      * Helper function to retrieve sync mappings
