@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" version="1.6.0" method="upgrade" group="system">
-  <name>JomSocialGroupSync</name>
+  <name>JomSocialGroupSyncSystem</name>
   <author>Brian Shaughnessy</author>
   <creationDate>2011-07-23</creationDate>
   <copyright>© 2011. All rights reserved.</copyright>
@@ -10,8 +10,8 @@
   <version>1.0</version>
   <description>Companion plugin for the JomSocial Group Sync component, providing synchronization of Joomla ACL Groups with JomSocial Groups.</description>
   <files>
-    <filename plugin="jomsocialgroupsync">jomsocialgroupsync.php</filename>
-    <filename>jomsocialgroupsync.xml</filename>
+    <filename plugin="jomsocialgroupsyncsystem">jomsocialgroupsyncsystem.php</filename>
+    <filename>jomsocialgroupsyncsystem.xml</filename>
     <filename>index.html</filename>
   </files>
 </extension>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @version		2011-07-23 20:07:15$
- * @author		Marek Handze
+ * @author		Lighthouse Consulting & Design
  * @package		JomSocial Group Sync
  * @copyright	Copyright (C) 2011. All rights reserved.
  * @license		GNU GPL
@@ -12,7 +12,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.plugin.plugin' );
 require_once( JPATH_ROOT.'/components/com_community/libraries/core.php');
 
-class  plgSystemJomSocialGroupSync extends JPlugin
+class  plgSystemJomSocialGroupSyncSystem extends JPlugin
 {
 	
 	/*
@@ -107,7 +107,8 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         }
         
         //if we are not in the right context, exit
-        if ( !in_array( $context, array('com_jomsocialgroupsync.synchronizationrule', 'com_jomsocialgroupsync.synchronizationrules') ) ) {
+        if ( !in_array( $context, array( 'com_jomsocialgroupsync.synchronizationrule', 
+                                         'com_jomsocialgroupsync.synchronizationrules' ) ) ) {
             return true;
         }
 
@@ -116,8 +117,8 @@ class  plgSystemJomSocialGroupSync extends JPlugin
         jimport( 'joomla.access.access' );
 
         // Instantiate JomSocial
-        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
-        require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
+        require_once JPATH_ROOT.'/administrator/components/com_community/defines.php';
+        require_once JPATH_ROOT.'/components/com_community/libraries/core.php';
 
         //update Joomla groups
         $model =  CFactory::getModel( 'Groups' );

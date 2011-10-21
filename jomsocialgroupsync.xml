@@ -50,7 +50,7 @@
 	</administration>
 	
 	<plugins>
-        <plugin folder="plugins/system" plugin="jomsocialgroupsync" name="JomSocial Group Sync" group="system" />
+        <plugin folder="plugins/system" plugin="jomsocialgroupsyncsystem" name="JomSocial Group Sync System" group="system" />
 		<plugin folder="plugins/community" plugin="jomsocialgroupsync" name="JomSocial Group Sync" group="community" />
     </plugins>
     
