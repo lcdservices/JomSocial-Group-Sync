@@ -10,12 +10,11 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport( 'joomla.plugin.plugin' );
-require_once( JPATH_ROOT.'/components/com_community/libraries/core.php');
 
-class  plgSystemJomSocialGroupSyncSystem extends JPlugin
+class plgSystemJomSocialGroupSyncSystem extends JPlugin
 {
 	
-	/*
+    /*
      * Joomla -> JomSocial
      * Update JomSocial groups on Joomla user save 
      * Method is called after user data is stored in the database
@@ -39,7 +38,8 @@ class  plgSystemJomSocialGroupSyncSystem extends JPlugin
         $app = JFactory::getApplication();
 
         // Instantiate JomSocial
-        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
+        require_once JPATH_ROOT.'/administrator/components/com_community/defines.php';
+        require_once JPATH_ROOT.'/components/com_community/libraries/core.php';
 
         // Get sync mappings
         $mappings = self::getJomSocialGroupSyncMappings();

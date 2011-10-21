@@ -44,8 +44,9 @@ class com_JomSocialGroupSyncInstallerScript {
         // Enable plugins
         $db->setQuery( "UPDATE $tableExtensions
                         SET $columnEnabled = 1
-                        WHERE $columnElement = 'jomsocialgroupsync'
-                        AND $columnType = 'plugin'"
+                        WHERE ( $columnElement = 'jomsocialgroupsync' OR
+                                $columnElement = 'jomsocialgroupsyncsystem' ) AND
+                              AND $columnType = 'plugin'"
                       );
         $db->query();
     }
