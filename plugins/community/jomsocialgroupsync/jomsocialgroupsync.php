@@ -1,9 +1,9 @@
 <?php
 /**
- * @version		2011-07-23 20:07:15$
- * @author		Marek Handze
+ * @version		2012-03-14
+ * @author		Lighthouse Consulting & Design
  * @package		JomSocial Group Sync
- * @copyright	Copyright (C) 2011. All rights reserved.
+ * @copyright	Copyright (C) 2012. All rights reserved.
  * @license		GNU GPL
  */
 
@@ -27,7 +27,7 @@ class  plgCommunityJomSocialGroupSync extends CApplications
      * @since   1.6
      */
     function onGroupJoin( &$group, $memberid ) {
-        if (self::groupsSync (&$group, $memberid)) {
+        if (self::groupsSync ($group, $memberid)) {
             return true;
         }
 
@@ -46,7 +46,7 @@ class  plgCommunityJomSocialGroupSync extends CApplications
      * @since   1.6
      */
     function onGroupJoinApproved( &$group, $memberid ) {
-        if (self::groupsSync (&$group, $memberid)) {
+        if (self::groupsSync ($group, $memberid)) {
             return true;
         }
     } //end jomsocial_post
@@ -67,11 +67,11 @@ class  plgCommunityJomSocialGroupSync extends CApplications
         }
 
         // Instantiate JomSocial
-        require_once JPATH_ROOT.'/'.'administrator/components/com_community/defines.php';
-        require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php' );
+        require_once JPATH_ROOT.'/administrator/components/com_community/defines.php';
+        require_once JPATH_ROOT.'/components/com_community/libraries/core.php';
 
         jimport('joomla.user.helper');
-        $model =  CFactory::getModel( 'Groups' );
+        $model = CFactory::getModel( 'Groups' );
 
         foreach ( $mappings as $mapping ) {
             if ( $model->isMember($memberid, $mapping['jsgroup_id']) ) {
