@@ -30,6 +30,8 @@ class plgSystemJomSocialGroupSyncSystem extends JPlugin
      */
     function onUserAfterSave( $user, $isnew, $success, $msg ) {
 
+		jimport( 'joomla.user.helper' );
+
         //if 'latitude' key exists, event triggered from within JomSocial 
         if ( array_key_exists('latitude', $user) ) {
             return;
@@ -58,7 +60,7 @@ class plgSystemJomSocialGroupSyncSystem extends JPlugin
         $data->permissions = 0;
 
 		//get the users ACL groups; the $user object is unreliable so retrieve using helper
-		$jUserGroups = JUserHelper::getUserGroups($juserid);
+		$jUserGroups = JUserHelper::getUserGroups($user['id']);
 
         // Cycle through mappings and add to/remove from JomSocial groups
         foreach ( $mappings as $mapping ) {
