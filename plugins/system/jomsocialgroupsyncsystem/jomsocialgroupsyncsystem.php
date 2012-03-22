@@ -57,12 +57,15 @@ class plgSystemJomSocialGroupSyncSystem extends JPlugin
         $data->approved    = 1;
         $data->permissions = 0;
 
+		//get the users ACL groups; the $user object is unreliable so retrieve using helper
+		$jUserGroups = JUserHelper::getUserGroups($juserid);
+
         // Cycle through mappings and add to/remove from JomSocial groups
         foreach ( $mappings as $mapping ) {
 
             $data->groupid = $mapping['jsgroup_id'];
 
-            if ( in_array($mapping['jgroup_id'], $user['groups']) ) {
+            if ( in_array($mapping['jgroup_id'], $jUserGroups) ) {
 
                 // Add user to group members table
                 if (!$model->isMember($data->memberid, $data->groupid)) {
