@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2012-03-14
- * @author		Lighthouse Consulting & Design
- * @package		JomSocial Group Sync
- * @copyright	Copyright (C) 2012. All rights reserved.
- * @license		GNU GPL
+ * @version    2012-03-14
+ * @author     Lighthouse Consulting & Design
+ * @package    JomSocial Group Sync
+ * @copyright  Copyright (C) 2012. All rights reserved.
+ * @license    GNU GPL
  */
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
@@ -74,7 +74,8 @@ class  plgCommunityJomSocialGroupSync extends CApplications
         $model = CFactory::getModel( 'Groups' );
 
         foreach ( $mappings as $mapping ) {
-            if ( $model->isMember($memberid, $mapping['jsgroup_id']) ) {
+            if ( $model->isMember($memberid, $mapping['jsgroup_id'])  &&
+                 $mapping['jsgroup_id'] == $group->id ) {
 
                 // Add user to jgroup members table
                 JUserHelper::addUserToGroup( $memberid, $mapping['jgroup_id'] );

@@ -1,10 +1,10 @@
 <?php
 /**
- * @version		2011-07-23 20:07:15$
- * @author		Lighthouse Consulting & Design
- * @package		JomSocial Group Sync
- * @copyright	Copyright (C) 2011. All rights reserved.
- * @license		GNU GPL
+ * @version    2011-07-23 20:07:15$
+ * @author     Lighthouse Consulting & Design
+ * @package    JomSocial Group Sync
+ * @copyright  Copyright (C) 2011. All rights reserved.
+ * @license    GNU GPL
  */
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
@@ -13,7 +13,7 @@ jimport( 'joomla.plugin.plugin' );
 
 class plgSystemJomSocialGroupSyncSystem extends JPlugin
 {
-	
+
     /*
      * Joomla -> JomSocial
      * Update JomSocial groups on Joomla user save 
@@ -30,7 +30,7 @@ class plgSystemJomSocialGroupSyncSystem extends JPlugin
      */
     function onUserAfterSave( $user, $isnew, $success, $msg ) {
 
-		jimport( 'joomla.user.helper' );
+        jimport( 'joomla.user.helper' );
 
         //if 'latitude' key exists, event triggered from within JomSocial 
         if ( array_key_exists('latitude', $user) ) {
@@ -59,8 +59,12 @@ class plgSystemJomSocialGroupSyncSystem extends JPlugin
         $data->approved    = 1;
         $data->permissions = 0;
 
-		//get the users ACL groups; the $user object is unreliable so retrieve using helper
-		$jUserGroups = JUserHelper::getUserGroups($user['id']);
+        //get the users ACL groups; retrieve using helper if not set in user object
+        if ( empty($user['groups']) ) {
+            $jUserGroups = JUserHelper::getUserGroups($user['id']);
+        } else {
+            $jUserGroups = $user['groups'];
+        }
 
         // Cycle through mappings and add to/remove from JomSocial groups
         foreach ( $mappings as $mapping ) {
